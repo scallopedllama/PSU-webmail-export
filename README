@@ -1,0 +1,60 @@
+ This is a somewhate simple script useful to former students of PSU
+ who foolishly used its crappy webmail client without having the 
+ "Leave messages on POP server" option ticked. It will parse a folder
+ full of html files that are saved emails from the webmail client,
+ parse out all useful information and create a proper mdir folder that
+ can be easily imported into a mail client like kmail.
+ 
+ The quick and simple way to export all your mail to gmail:
+ 1. Gather requirements:
+	Only ever tested on linux with bash 4.1.7.
+	You need to have awk, sed, kmail, and uuencode installed (search your distro's repositories)
+ 2. Use a mass download extension of your choice in the browser of your choice.
+	I used DownThemALL! on Firefox.
+	a. Open your webmail to your inbox and highlight all of the subject line hyperlinks.
+	b. Go to Tools > DownThemALL! Tools > DownThemALL!
+	c. Save all the files some place relevant and don't let it overwrite the files
+	   (They'll all be retrieve.cgi.html)
+	   I recommend giving each webmail folder its own folder full of these html files.
+	d. Repeat for all your mail folders and do the same to get all your attachments, save
+	   those in a folder called Attachments. Don't forget your sent emails.
+ 3. Now you should have a directory structure like the following:
+	root
+	  |- Inbox
+	  |- Sent
+	  |- OneFolder (Don't have spaces in these folder names)
+	  |- SecondFolder
+	  |- Attachments
+	  psuConvert.sh
+     Make sure that the psuConvert.sh file is in the folder above your mail and attachments folders
+     and make sure it is executable
+      $ chmod +x psuConvert.sh
+ 4. Start converting the folders with the tool. The syntax is as follows:
+      $ ./psuConvert.sh [Foldername]
+    Where [Foldername] is the name of the folder to process. For the above example you would have to run
+    the script 4 times:
+      $ ./psuConvert.sh Inbox
+        # snip
+      $ ./psuConvert.sh Sent
+        # snip
+      $ ./psuConvert.sh OneFolderystem
+        # snip
+      $ ./psuConvert.sh SecondFolder
+        # snip
+    The scripts' progress through the folder will be detailed, all the messages will be saved in a new folder
+    with the same name as the input one with "convd_" prepended to it, so convd_Inbox for the above.
+ 5. This will leave you with a folder full of files that are properly formatted to be dropped DIRECTLY into kmail's
+    mail folders which are located in ~/.kde4/share/apps/kmail/mail
+    In there, you will want to make a folder to represent each group of mail (Like Import-Imbox) and in each of those
+    make the following three folders: cur, new, and tmp.
+ 6. Move each folder's convd_ files into the cur folder of its representive group in kmail's folders.
+ 7. Start kmail, you should see all of your emails in there with all their attachments properly added (unless the file
+    wasn't found).
+ 8. Add your Gmail account to kmail using IMAP. Add labels to differentiate between the folders, then simply highlight
+    all the messages in your converted folders and drag them into the corresponding folder under your gmail account.
+    I'd recommend copying when it asks.
+ 9. Sit back and relax while it all uploads. When it's done, it'll be in your Gmail account properly threaded and everything.
+ 10. Tell me if the script worked for you, was helpful, etc.
+ 
+
+      
